@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Potencjał ekspansji na inne marketplace'y — Pest Control</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1e293b;line-height:1.5;padding:24px;max-width:1100px;margin:0 auto}
+h1{font-size:1.5rem;margin-bottom:4px}
+.sub{color:#64748b;font-size:.85rem;margin-bottom:24px}
+h2{font-size:1.15rem;margin:28px 0 12px;border-bottom:2px solid #e2e8f0;padding-bottom:6px}
+h3{font-size:.95rem;margin:18px 0 8px;color:#475569}
+.card{background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px 20px;margin-bottom:16px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:18px}
+.kpi{background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:14px 16px;text-align:center}
+.kpi-v{font-size:1.4rem;font-weight:700;line-height:1.1}
+.kpi-l{font-size:.7rem;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:.04em}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th{background:#f1f5f9;padding:8px 10px;text-align:left;font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:#475569}
+td{padding:8px 10px;border-bottom:1px solid #e2e8f0}
+tr:hover{background:#f8fafc}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.72rem;font-weight:600}
+.b-green{background:#dcfce7;color:#15803d}
+.b-yellow{background:#fef3c7;color:#92400e}
+.b-red{background:#fee2e2;color:#dc2626}
+.b-blue{background:#dbeafe;color:#1d4ed8}
+.b-gray{background:#f1f5f9;color:#475569}
+.b-purple{background:#ede9fe;color:#6d28d9}
+.insight{background:#eff6ff;border-left:4px solid #2563eb;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:.85rem}
+.note{font-size:.75rem;color:#94a3b8;margin-top:8px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.cw{position:relative}
+.bar-h{height:22px;border-radius:4px;display:flex;align-items:center;padding:0 8px;font-size:.72rem;font-weight:600;color:#fff;min-width:30px;margin-bottom:6px}
+.bar-label{font-size:.75rem;color:#475569;margin-bottom:2px;display:flex;justify-content:space-between}
+.pros{color:#15803d}.cons{color:#dc2626}
+ul{margin:6px 0 6px 18px;font-size:.82rem}
+li{margin-bottom:4px}
+.verdict{font-size:.9rem;font-weight:600;margin-top:10px;padding:8px 12px;border-radius:6px}
+.v-green{background:#f0fdf4;border:1px solid #bbf7d0}
+.v-yellow{background:#fffbeb;border:1px solid #fde68a}
+.section-us{border-left:4px solid #2563eb}
+.section-eu{border-left:4px solid #d97706}
+.section-spec{border-left:4px solid #7c3aed}
+.mini-card{background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:14px 16px}
+</style>
+</head>
+<body>
+
+<h1>Potencjał ekspansji na inne marketplace'y</h1>
+<div class="sub">Kategoria Pest Control, Fleas/Ticks, Lice | Rynki US i EU | Analiza ad-hoc — marzec 2026</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-v" style="color:#2563eb">4</div><div class="kpi-l">Marketplace'y US</div></div>
+  <div class="kpi"><div class="kpi-v" style="color:#d97706">5</div><div class="kpi-l">Marketplace'y EU</div></div>
+  <div class="kpi"><div class="kpi-v">$6.2B</div><div class="kpi-l">Rynek pest control US (2024)</div></div>
+  <div class="kpi"><div class="kpi-v" style="color:#15803d">$9.5B</div><div class="kpi-l">Prognoza US 2033 (CAGR 6.2%)</div></div>
+  <div class="kpi"><div class="kpi-v" style="color:#d97706">9</div><div class="kpi-l">Platform w matrycy priorytetów</div></div>
+</div>
+
+<!-- ═══ CHART: GMV PORÓWNANIE ═══ -->
+<h2>Wielkość marketplace'ów — GMV* (mld USD/EUR, 2025 est.)</h2>
+<div class="note" style="margin-bottom:12px">*<strong>GMV (Gross Merchandise Value)</strong> — łączna wartość wszystkich produktów sprzedanych przez marketplace w danym okresie, przed odliczeniem zwrotów, prowizji i kosztów. To najczęściej używana miara wielkości marketplace'u — pokazuje ile pieniędzy przepływa przez platformę, nie ile zarabia sama platforma.</div>
+
+<div class="g2">
+  <div class="card">
+    <h3>US — GMV marketplace'ów</h3>
+    <div class="cw" style="height:280px"><canvas id="gmvUS"></canvas></div>
+    <div class="note">Źródła: <a href="https://therocketretail.com/blog/amazon-vs-walmart">The Rocket Retail</a>, <a href="https://www.cnbc.com/2026/02/19/amazon-revenue-passes-walmart-earnings-reports.html">CNBC</a>, <a href="https://www.cnn.com/2026/02/19/business/walmart-amazon-sales-companies">CNN</a></div>
+  </div>
+  <div class="card">
+    <h3>EU — GMV marketplace'ów</h3>
+    <div class="cw" style="height:280px"><canvas id="gmvEU"></canvas></div>
+    <div class="note">Źródła: <a href="https://marketplace-universe.com/marketplaces-in-cee/">Marketplace Universe</a>, <a href="https://www.plentyone.com/en/blog/off-to-southeastern-europe-opening-up-new-markets-with-plentyone-and-emag">PlentyOne</a>, <a href="https://olimpmarketplace.com/en/index.php/2025/03/19/przeglad-najlepszych-platform-marketplace-w-europie-i-usa-e-commerce-w-2025/">Olimp Marketplace</a></div>
+  </div>
+</div>
+
+<!-- ═══ CHART: GMV PIE SHARE ═══ -->
+<div class="g2">
+  <div class="card">
+    <h3>Udział w GMV — US (2025)</h3>
+    <div class="cw" style="height:280px"><canvas id="pieUS"></canvas></div>
+  </div>
+  <div class="card">
+    <h3>Udział w GMV — EU (2025)</h3>
+    <div class="cw" style="height:280px"><canvas id="pieEU"></canvas></div>
+  </div>
+</div>
+
+<!-- ═══ CHART: WZROST YOY ═══ -->
+<h2>Dynamika wzrostu marketplace'ów (% YoY)</h2>
+<div class="card">
+  <div class="cw" style="height:300px"><canvas id="growthChart"></canvas></div>
+  <div class="note">Źródła: <a href="https://www.sellerlabs.com/blog/walmart-marketplace-growth-2025-for-amazon-sellers/">Seller Labs</a>, <a href="https://marketplace-universe.com/marketplaces-in-cee/">Marketplace Universe</a>, <a href="https://www.omnicado.com/en/selling-channels/emag-marketplace">Omnicado (eMAG)</a></div>
+</div>
+
+<!-- ═══ CHART: GMV US TREND ═══ -->
+<h2>Prognoza GMV — marketplace'y US (2024-2028F)</h2>
+<div class="card">
+  <div class="cw" style="height:320px"><canvas id="gmvTrendUS"></canvas></div>
+  <div class="note">Źródła: <a href="https://www.marketplacepulse.com/articles/amazon-gmv-surpassed-800-billion-in-2025">Marketplace Pulse</a>, <a href="https://stratably.com/updated-may-2025-amazon-forecasts-2023-2026/">Stratably</a>, <a href="https://ecdb.com/resources/sample-data/retailer/walmart">ECDB (Walmart)</a>, <a href="https://thelowdown.momentum.asia/new-report-tiktok-shop-u-s-gmv-grew-68-to-reach-us15-1b-in-2025/">Momentum Works (TikTok)</a>, <a href="https://www.emarketer.com/content/tiktok-driving-us-social-commerce-growth">eMarketer</a>. Amazon = global GMV. TikTok Shop i eBay = tylko US.</div>
+</div>
+
+<!-- ═══ CHART: GMV EU TREND ═══ -->
+<h2>Prognoza GMV — marketplace'y EU (2024-2028F)</h2>
+<div class="card">
+  <div class="cw" style="height:320px"><canvas id="gmvTrend"></canvas></div>
+  <div class="note">Źródła: <a href="https://marketplace-universe.com/marketplaces-in-cee/">Marketplace Universe</a>, <a href="https://www.plentyone.com/en/blog/off-to-southeastern-europe-opening-up-new-markets-with-plentyone-and-emag">PlentyOne (eMAG)</a>, <a href="https://ecdb.com/resources/sample-data/retailer/kaufland">ECDB (Kaufland)</a>, <a href="https://ecdb.com/resources/sample-data/retailer/bol">ECDB (Bol)</a>. Kaufland linia przerywana — najwyższy wzrost ale z najmniejszej bazy. 2027-28F = projekcje na bazie aktualnych trendów YoY.</div>
+</div>
+
+<!-- ═══ US SECTION ═══ -->
+<h2 style="color:#2563eb">Marketplace'y w USA</h2>
+
+<div class="g2">
+  <!-- WALMART -->
+  <div class="card section-us">
+    <h3>Walmart Marketplace</h3>
+    <table>
+    <tbody>
+    <tr><td>Przychód roczny</td><td><strong>$680-712 mld</strong></td></tr>
+    <tr><td>Sprzedawcy 3P</td><td>~150-160 tys. (+30-40% YoY)</td></tr>
+    <tr><td>Pest control fit</td><td><span class="badge b-green">WYSOKI</span> — "Home Essentials" promowane</td></tr>
+    </tbody>
+    </table>
+    <div class="bar-label" style="margin-top:10px"><span>Oczekiwany % vs Amazon (pest control)</span><span><strong>20-35%</strong> (raporty branżowe)</span></div>
+    <div class="bar-h" style="width:35%;background:#16a34a">20-35% (raporty)</div>
+    <div class="bar-label"><span>Realistyczny % (doświadczenia sprzedawców online)</span><span><strong>5-10%</strong></span></div>
+    <div style="display:flex;align-items:center;gap:8px"><div class="bar-h" style="width:10%;background:#d97706;margin-bottom:0"></div><span style="font-size:.75rem;font-weight:600;color:#92400e">5-10% (praktyka)</span></div>
+    <div class="insight" style="border-left-color:#d97706;background:#fffbeb">
+      <strong>Ważne zastrzeżenie:</strong> Raporty branżowe (<a href="https://incrementumdigital.com/blog/ecommerce-news/walmart-marketplace-versus-amazon-where-to-sell-guide/">Incrementum Digital</a>, <a href="https://www.channable.com/blog/walmart-marketplace-vs-amazon">Channable</a>) podają 20-35%, ale <strong>wielu sprzedawców prywatnie raportuje zaledwie 5-10% sprzedaży Amazona</strong> (<a href="https://www.reddit.com/r/WalmartSellers/comments/wj5dg0/my_experience_as_a_walmart_seller_pros_cons_and/">Reddit r/WalmartSellers</a>, <a href="https://sellercentral.amazon.com/seller-forums/discussions/t/d32670bc1cc09da136f245c19d31ef9b">Amazon Seller Forums</a>). Nasze własne doświadczenia z suplementami potwierdzają dolny zakres (5-10%) dla sprzedaży online. <strong>Retail / brick-and-mortar Walmart ma z pewnością większy potencjał</strong> i wymaga głębszej analizy osobno.
+    </div>
+    <div class="verdict v-green">WERDYKT: <span class="badge b-green">WYSOKI POTENCJAŁ</span> — niski koszt wejścia, mniej konkurencji, WFS (Walmart Fulfillment Services — odpowiednik Amazon FBA: Walmart magazynuje, pakuje i wysyła produkty) dostępne. Realistycznie 5-10% sprzedaży online vs Amazon. <strong>Wymaga dalszego researchu</strong> — szczególnie analiza potencjału sklepów stacjonarnych (brick-and-mortar), gdzie Walmart ma 4,700+ lokalizacji w USA i znacznie większy wolumen niż online.</div>
+    <div class="note">Źródła: <a href="https://therocketretail.com/blog/amazon-vs-walmart">The Rocket Retail</a>, <a href="https://www.sellerlabs.com/blog/walmart-marketplace-growth-2025-for-amazon-sellers/">Seller Labs</a>, <a href="https://incrementumdigital.com/blog/ecommerce-news/walmart-marketplace-versus-amazon-where-to-sell-guide/">Incrementum Digital</a>, <a href="https://starterx.co/blog/walmart-vs-amazon-marketplace-for-sellers/">StarterX</a></div>
+  </div>
+
+  <!-- TIKTOK -->
+  <div class="card section-us">
+    <h3>TikTok Shop (USA)</h3>
+    <table>
+    <tbody>
+    <tr><td>GMV (2025)</td><td><strong>~$20-25 mld</strong> (+100% YoY)</td></tr>
+    <tr><td>Model</td><td>Social commerce, live shopping, afilianci</td></tr>
+    <tr><td>Pest control fit</td><td><span class="badge b-green">WYSOKI dla wiralowych produktów</span></td></tr>
+    </tbody>
+    </table>
+    <h3 style="margin-top:12px;color:#1e293b">Jak to działa — zupełnie inny model niż Amazon</h3>
+    <ul style="margin-top:6px">
+      <li><strong>Motor sprzedaży = influencerzy, nie PPC.</strong> Wysyłasz produkty masowo do twórców (creators/influencerów), którzy nagrywają wideo z Twoim produktem</li>
+      <li><strong>Podpięcie produktu pod wideo</strong> — klient ogląda film influencera i kupuje produkt bezpośrednio z tego wideo (koszyk w filmie)</li>
+      <li><strong>Wiralowość = sprzedaż.</strong> Marketing wewnątrz platformy (TikTok Ads) jest używany, ale głównie do boostowania filmów, które już wykazują potencjał wiralowy</li>
+      <li><strong>FBT (Fulfilled by TikTok)</strong> — odpowiednik FBA: TikTok magazynuje, pakuje i wysyła. Podobny model operacyjny</li>
+      <li><strong>Pest control = naturalny content wiralowy</strong> — "pułapka złapała 500 much" to dokładnie typ contentu, który eksploduje na TikToku</li>
+    </ul>
+    <div class="verdict v-green">WERDYKT: <span class="badge b-green">WYSOKI POTENCJAŁ</span> — ale głównie dla produktów, które jesteśmy w stanie sprzedać jako wiralowe. Wymaga inwestycji w sample'owanie influencerów i content, nie w klasyczny PPC</div>
+    <div class="note">Źródła: TikTok for Business (2025), raporty e-commerce Q4 2025</div>
+  </div>
+</div>
+
+<div class="g2">
+  <!-- EBAY -->
+  <div class="card section-us">
+    <h3>eBay (USA)</h3>
+    <table>
+    <tbody>
+    <tr><td>Aktywni kupujący</td><td>~132 mln globalnie</td></tr>
+    <tr><td>Mocne kategorie</td><td>Home & Garden, Pet Supplies</td></tr>
+    <tr><td>Pest control fit</td><td><span class="badge b-yellow">ŚREDNI</span></td></tr>
+    </tbody>
+    </table>
+    <div class="verdict v-yellow">WERDYKT: <span class="badge b-yellow">ŚREDNI</span> — dobry dla generyków i pułapek</div>
+  </div>
+
+  <!-- SPECJALISTYCZNE US -->
+  <div class="card section-spec">
+    <h3>Kanały specjalistyczne (USA)</h3>
+    <table>
+    <tbody>
+    <tr><td><strong>DoMyOwn.com</strong></td><td>DIY pest control — spray, granulaty, pułapki</td></tr>
+    <tr><td><strong>ePestControl.com</strong></td><td>Profesjonalne środki pest control</td></tr>
+    <tr><td><strong>PetBucket.com</strong></td><td>Fleas & ticks — Advantage, Frontline, Seresto</td></tr>
+    </tbody>
+    </table>
+    <div class="note">Nie klasyczne marketplace'y 3P, ale pokazują gdzie konsument szuka produktów pest control poza Amazonem. Źródła: <a href="https://www.domyown.com">DoMyOwn.com</a>, <a href="https://www.epestcontrol.com">ePestControl.com</a>, <a href="https://www.petbucket.com">PetBucket.com</a></div>
+  </div>
+</div>
+
+<!-- ═══ EU SECTION ═══ -->
+<h2 style="color:#d97706">Marketplace'y w Europie</h2>
+
+<!-- CHART: PEST CONTROL FIT EU -->
+<div class="card">
+  <h3>Dopasowanie marketplace'ów EU do kategorii pest control / fleas / lice</h3>
+  <div class="cw" style="height:280px"><canvas id="fitChart"></canvas></div>
+</div>
+
+<div class="g3" style="grid-template-columns:1fr 1fr 1fr">
+  <!-- KAUFLAND -->
+  <div class="mini-card" style="border-left:4px solid #16a34a">
+    <h3 style="color:#16a34a">Kaufland</h3>
+    <div style="font-size:.8rem"><strong>DE, CZ, SK, PL, AT</strong> | ~32 mln wizyt/mies.</div>
+    <div style="font-size:.8rem">6-8 tys. sprzedawców | GMV: 2-3 mld EUR</div>
+    <ul>
+      <li>Bardzo mała konkurencja w pest control</li>
+      <li>Schwarz Group (Lidl/Kaufland) = zaufanie</li>
+      <li>Wzrost GMV: <strong>+80-100% YoY</strong></li>
+    </ul>
+    <div class="verdict v-green" style="font-size:.8rem"><span class="badge b-green">WYSOKI</span> — niski próg, szybki wzrost</div>
+    <div class="note">Źr.: <a href="https://olimpmarketplace.com/en/index.php/2025/03/19/przeglad-najlepszych-platform-marketplace-w-europie-i-usa-e-commerce-w-2025/">Olimp Marketplace</a></div>
+  </div>
+
+  <!-- eMAG -->
+  <div class="mini-card" style="border-left:4px solid #7c3aed">
+    <h3 style="color:#7c3aed">eMAG</h3>
+    <div style="font-size:.8rem"><strong>RO, HU, BG + PL/DE/AT</strong> | ~120 mln wizyt/mies.</div>
+    <div style="font-size:.8rem">56 tys. sprzedawców | 22.8 mln produktów | 9 mln klientów/mies.</div>
+    <ul>
+      <li>Nr 1 w Rumunii — ogromny organic traffic</li>
+      <li>GMV: <strong>2.3-2.7 mld EUR</strong> (+20-25% YoY)</li>
+      <li>Fulfillment By eMAG + Genius easybox</li>
+      <li>Silne: Home & Living, DIY, Pest Control</li>
+    </ul>
+    <div class="verdict v-green" style="font-size:.8rem"><span class="badge b-green">WYSOKI dla CEE</span> — pierwszy kanał w Rumunii</div>
+    <div class="note">Źr.: <a href="https://www.plentyone.com/en/blog/off-to-southeastern-europe-opening-up-new-markets-with-plentyone-and-emag">PlentyOne</a>, <a href="https://www.omnicado.com/en/selling-channels/emag-marketplace">Omnicado</a>, <a href="https://marketplace-universe.com/marketplaces-in-cee/">Marketplace Universe</a></div>
+  </div>
+</div>
+
+<div class="g3" style="margin-top:14px">
+  <!-- OTTO -->
+  <div class="mini-card" style="border-left:4px solid #d97706">
+    <h3 style="color:#d97706">Otto.de</h3>
+    <div style="font-size:.8rem"><strong>DE</strong> | ~50 mln wizyt/mies.</div>
+    <div style="font-size:.8rem">~6 tys. sprzedawców</div>
+    <ul>
+      <li>Duży share w Niemczech — dom i ogród</li>
+    </ul>
+    <div class="verdict v-yellow" style="font-size:.8rem"><span class="badge b-yellow">ŚREDNI</span></div>
+  </div>
+
+  <!-- BOL -->
+  <div class="mini-card" style="border-left:4px solid #0891b2">
+    <h3 style="color:#0891b2">Bol.com</h3>
+    <div style="font-size:.8rem"><strong>NL, BE</strong> | ~35 mln wizyt/mies.</div>
+    <div style="font-size:.8rem">~52 tys. sprzedawców | GMV: 6.3 mld EUR</div>
+    <ul>
+      <li>Nr 1 w Holandii — Home & Garden, Pet Care</li>
+    </ul>
+    <div class="verdict v-yellow" style="font-size:.8rem"><span class="badge b-yellow">ŚREDNI</span></div>
+  </div>
+
+  <!-- ZOOPLUS -->
+  <div class="mini-card" style="border-left:4px solid #15803d">
+    <h3 style="color:#15803d">Zooplus</h3>
+    <div style="font-size:.8rem"><strong>Cała EU</strong> | Największy zoosklep online</div>
+    <ul>
+      <li>Dominuje w fleas & ticks (Advantage, Frontline, Seresto)</li>
+      <li>Kluczowy kanał dla produktów weterynaryjnych</li>
+    </ul>
+    <div class="verdict v-green" style="font-size:.8rem"><span class="badge b-green">WYSOKI</span> (fleas/ticks)</div>
+  </div>
+</div>
+
+<!-- ═══ MATRYCA ═══ -->
+<h2>Matryca priorytetów</h2>
+<div class="card">
+  <div class="cw" style="height:320px"><canvas id="bubbleChart"></canvas></div>
+</div>
+
+<div class="card">
+<table>
+<thead><tr>
+  <th>#</th>
+  <th>Marketplace</th>
+  <th>Region</th>
+  <th>Potencjał</th>
+  <th>Wysiłek</th>
+  <th>Dlaczego</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td style="font-size:1.2rem;font-weight:700;color:#15803d">1</td>
+  <td><strong>Walmart</strong></td>
+  <td><span class="badge b-blue">US</span></td>
+  <td><span class="badge b-green">Wysoki</span></td>
+  <td><span class="badge b-yellow">Średni</span></td>
+  <td>Najwyższy ROI w US, WFS, mniej konkurencji, 20-35% Amazona</td>
+</tr>
+<tr>
+  <td style="font-size:1.2rem;font-weight:700;color:#15803d">2</td>
+  <td><strong>TikTok Shop</strong></td>
+  <td><span class="badge b-blue">US</span></td>
+  <td><span class="badge b-green">Wysoki</span></td>
+  <td><span class="badge b-yellow">Średni</span></td>
+  <td>Najszybszy wzrost (+100% YoY), idealny dla wiralowych demo pest control</td>
+</tr>
+<tr>
+  <td style="font-size:1.2rem;font-weight:700;color:#15803d">3</td>
+  <td><strong>Kaufland</strong></td>
+  <td><span class="badge b-yellow">DE/CEE</span></td>
+  <td><span class="badge b-green">Wysoki</span></td>
+  <td><span class="badge b-green">Niski</span></td>
+  <td>Najszybszy wzrost w EU (+80-100%), minimalna konkurencja pest</td>
+</tr>
+<tr>
+  <td style="font-size:1.2rem;font-weight:700;color:#15803d">4</td>
+  <td><strong>eMAG</strong></td>
+  <td><span class="badge b-purple">RO/HU/BG</span></td>
+  <td><span class="badge b-green">Wysoki</span></td>
+  <td><span class="badge b-yellow">Średni</span></td>
+  <td>Nr 1 w CEE, 120 mln wizyt, Fulfillment By eMAG, +20-25% YoY</td>
+</tr>
+<tr>
+  <td style="font-size:1.2rem;font-weight:700;color:#d97706">5</td>
+  <td><strong>Zooplus</strong></td>
+  <td><span class="badge b-yellow">EU</span></td>
+  <td><span class="badge b-green">Wysoki</span></td>
+  <td><span class="badge b-yellow">Średni</span></td>
+  <td>Kluczowy kanał fleas/ticks — tylko jeśli masz te produkty</td>
+</tr>
+<tr>
+  <td style="font-size:1.2rem;font-weight:700;color:#d97706">6</td>
+  <td><strong>eBay</strong></td>
+  <td><span class="badge b-gray">US/EU</span></td>
+  <td><span class="badge b-yellow">Średni</span></td>
+  <td><span class="badge b-green">Niski</span></td>
+  <td>Łatwe wejście, Home & Garden, generycy</td>
+</tr>
+<tr>
+  <td style="font-size:1.2rem;font-weight:700;color:#64748b">7</td>
+  <td><strong>Otto.de</strong></td>
+  <td><span class="badge b-yellow">DE</span></td>
+  <td><span class="badge b-yellow">Średni</span></td>
+  <td><span class="badge b-yellow">Średni</span></td>
+  <td>Duży DE, ale ograniczony pest control</td>
+</tr>
+<tr>
+  <td style="font-size:1.2rem;font-weight:700;color:#64748b">8</td>
+  <td><strong>Bol.com</strong></td>
+  <td><span class="badge b-yellow">NL/BE</span></td>
+  <td><span class="badge b-yellow">Średni</span></td>
+  <td><span class="badge b-yellow">Średni</span></td>
+  <td>Nr 1 w NL, ale mały rynek</td>
+</tr>
+<tr>
+  <td style="font-size:1.2rem;font-weight:700;color:#64748b">9</td>
+  <td><strong>Apteki online</strong></td>
+  <td><span class="badge b-yellow">EU</span></td>
+  <td><span class="badge b-yellow">Średni</span></td>
+  <td><span class="badge b-red">Wysoki</span></td>
+  <td>Farmaciasdirect, PromoFarma — silne w lice/wszy, wymaga regulacji</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+<div class="card" style="margin-top:24px;background:#f8fafc;border:1px solid #e2e8f0">
+<h3>Źródła danych</h3>
+<table style="font-size:.75rem">
+<thead><tr><th>Źródło</th><th>Użyto do</th><th>Link</th></tr></thead>
+<tbody>
+<tr><td>The Rocket Retail</td><td>Amazon vs Walmart revenue, ogólne porównanie</td><td><a href="https://therocketretail.com/blog/amazon-vs-walmart">therocketretail.com</a></td></tr>
+<tr><td>Seller Labs</td><td>Walmart Marketplace wzrost, liczba sprzedawców</td><td><a href="https://www.sellerlabs.com/blog/walmart-marketplace-growth-2025-for-amazon-sellers/">sellerlabs.com</a></td></tr>
+<tr><td>Incrementum Digital</td><td>Walmart vs Amazon — % obrotu sprzedawców</td><td><a href="https://incrementumdigital.com/blog/ecommerce-news/walmart-marketplace-versus-amazon-where-to-sell-guide/">incrementumdigital.com</a></td></tr>
+<tr><td>Channable</td><td>Porównanie marketplace'ów, pest control keywords</td><td><a href="https://www.channable.com/blog/walmart-marketplace-vs-amazon">channable.com</a></td></tr>
+<tr><td>StarterX</td><td>Walmart vs Amazon dla sprzedawców, statystyki</td><td><a href="https://starterx.co/blog/walmart-vs-amazon-marketplace-for-sellers/">starterx.co</a></td></tr>
+<tr><td>PlentyOne</td><td>eMAG — statystyki, GMV, rynki</td><td><a href="https://www.plentyone.com/en/blog/off-to-southeastern-europe-opening-up-new-markets-with-plentyone-and-emag">plentyone.com</a></td></tr>
+<tr><td>Omnicado</td><td>eMAG — fulfillment, kategorie, wzrost</td><td><a href="https://www.omnicado.com/en/selling-channels/emag-marketplace">omnicado.com</a></td></tr>
+<tr><td>Marketplace Universe</td><td>Marketplace'y CEE, GMV porównanie</td><td><a href="https://marketplace-universe.com/marketplaces-in-cee/">marketplace-universe.com</a></td></tr>
+<tr><td>Olimp Marketplace</td><td>Przegląd platform EU 2025</td><td><a href="https://olimpmarketplace.com/en/index.php/2025/03/19/przeglad-najlepszych-platform-marketplace-w-europie-i-usa-e-commerce-w-2025/">olimpmarketplace.com</a></td></tr>
+<tr><td>Reddit r/WalmartSellers</td><td>Doświadczenia sprzedawców — realistyczne %</td><td><a href="https://www.reddit.com/r/WalmartSellers/comments/wj5dg0/my_experience_as_a_walmart_seller_pros_cons_and/">reddit.com</a></td></tr>
+<tr><td>Amazon Seller Forums</td><td>Opinie sprzedawców o Walmart</td><td><a href="https://sellercentral.amazon.com/seller-forums/discussions/t/d32670bc1cc09da136f245c19d31ef9b">sellercentral.amazon.com</a></td></tr>
+<tr><td>LinkedIn / IMARC Group</td><td>US Home Pest Control Market $6.2B→$9.5B</td><td><a href="https://www.linkedin.com/pulse/united-states-home-pest-control-products-market-application-5bg3f">linkedin.com (IMARC)</a></td></tr>
+<tr><td>CNN / CNBC</td><td>Amazon przekracza Walmart revenue 2026</td><td><a href="https://www.cnbc.com/2026/02/19/amazon-revenue-passes-walmart-earnings-reports.html">cnbc.com</a></td></tr>
+<tr><td>Własne doświadczenia</td><td>Walmart online 5-10% vs Amazon (suplementy)</td><td>Dane wewnętrzne</td></tr>
+</tbody>
+</table>
+<div class="note" style="margin-top:8px">Dane na Q1 2026. GMV i wzrosty YoY to szacunki oparte na publicznie dostępnych raportach. Wartości % vs Amazon to benchmarki kategorii — rzeczywiste wyniki zależą od produktu, ceny, fulfillmentu i optymalizacji.</div>
+</div>
+
+<script>
+Chart.register(ChartDataLabels);
+const DL_OFF = {plugins:{datalabels:{display:false}}};
+
+// ═══ GMV US ═══
+new Chart(document.getElementById('gmvUS'), {
+  type:'bar',
+  data:{
+    labels:['Amazon US','Walmart','TikTok Shop','eBay US'],
+    datasets:[{
+      data:[400,85,22,18],
+      backgroundColor:['#2563eb','#16a34a','#000000','#d97706'],
+      borderRadius:4
+    }]
+  },
+  plugins:[ChartDataLabels],
+  options:{
+    maintainAspectRatio:false,
+    indexAxis:'y',
+    plugins:{legend:{display:false},datalabels:{anchor:'end',align:'end',formatter:v=>'$'+v+'B',font:{size:11,weight:'600'},color:'#334155'}},
+    scales:{x:{display:false,max:500},y:{grid:{display:false}}}
+  }
+});
+
+// ═══ GMV EU ═══
+new Chart(document.getElementById('gmvEU'), {
+  type:'bar',
+  data:{
+    labels:['Amazon EU','Bol.com','Otto.de','Kaufland','eMAG'],
+    datasets:[{
+      data:[60,6.3,3,2.5,2.5],
+      backgroundColor:['#2563eb','#0891b2','#d97706','#16a34a','#7c3aed'],
+      borderRadius:4
+    }]
+  },
+  plugins:[ChartDataLabels],
+  options:{
+    maintainAspectRatio:false,
+    indexAxis:'y',
+    plugins:{legend:{display:false},datalabels:{anchor:'end',align:'end',formatter:v=>'\u20ac'+v+'B',font:{size:11,weight:'600'},color:'#334155'}},
+    scales:{x:{display:false,max:75},y:{grid:{display:false}}}
+  }
+});
+
+// ═══ PIE US ═══
+new Chart(document.getElementById('pieUS'), {
+  type:'doughnut',
+  data:{
+    labels:['Amazon US ($400B)','Walmart ($85B)','TikTok Shop ($22B)','eBay US ($18B)'],
+    datasets:[{data:[400,85,22,18],backgroundColor:['#2563eb','#16a34a','#000','#d97706'],borderWidth:2,borderColor:'#fff'}]
+  },
+  plugins:[ChartDataLabels],
+  options:{
+    maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:8,boxWidth:14}},
+      datalabels:{formatter:(v,ctx)=>{const t=ctx.dataset.data.reduce((a,b)=>a+b,0);return(v/t*100).toFixed(1)+'%'},color:'#fff',font:{size:11,weight:'700'}}}
+  }
+});
+
+// ═══ PIE EU ═══
+new Chart(document.getElementById('pieEU'), {
+  type:'doughnut',
+  data:{
+    labels:['Amazon EU (\u20ac60B)','Bol.com (\u20ac6.3B)','Otto.de (\u20ac3B)','Kaufland (\u20ac2.5B)','eMAG (\u20ac2.5B)'],
+    datasets:[{data:[60,6.3,3,2.5,2.5],backgroundColor:['#2563eb','#0891b2','#d97706','#16a34a','#7c3aed'],borderWidth:2,borderColor:'#fff'}]
+  },
+  plugins:[ChartDataLabels],
+  options:{
+    maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:8,boxWidth:14}},
+      datalabels:{formatter:(v,ctx)=>{const t=ctx.dataset.data.reduce((a,b)=>a+b,0);return(v/t*100).toFixed(1)+'%'},color:'#fff',font:{size:11,weight:'700'}}}
+  }
+});
+
+// ═══ WZROST YoY ═══
+new Chart(document.getElementById('growthChart'), {
+  type:'bar',
+  data:{
+    labels:['TikTok Shop','Kaufland','Walmart MP','eMAG','Amazon','Bol.com','Otto','eBay'],
+    datasets:[{
+      data:[100,90,35,22,11,8,5,3],
+      backgroundColor:['#000','#16a34a','#16a34a','#7c3aed','#2563eb','#0891b2','#d97706','#d97706'],
+      borderRadius:4
+    }]
+  },
+  plugins:[ChartDataLabels],
+  options:{
+    maintainAspectRatio:false,
+    plugins:{legend:{display:false},datalabels:{anchor:'end',align:'end',formatter:v=>'+'+v+'%',font:{size:11,weight:'600'},color:'#334155'}},
+    scales:{y:{display:false,max:120},x:{grid:{display:false}}}
+  }
+});
+
+// ═══ GMV TREND US ═══
+new Chart(document.getElementById('gmvTrendUS'), {
+  type:'line',
+  data:{
+    labels:['2024','2025','2026F','2027F','2028F'],
+    datasets:[
+      {label:'Amazon (global)',data:[770,830,890,950,1010],borderColor:'#2563eb',backgroundColor:'transparent',borderWidth:3,tension:.3,pointRadius:4},
+      {label:'Walmart (online)',data:[80,100,115,128,140],borderColor:'#16a34a',backgroundColor:'transparent',borderWidth:2.5,tension:.3,pointRadius:4},
+      {label:'TikTok Shop (US)',data:[9,15.1,22,28,33],borderColor:'#000',backgroundColor:'transparent',borderWidth:2.5,tension:.3,pointRadius:4,borderDash:[5,3]},
+      {label:'eBay (US)',data:[18,18.5,19,19.5,20],borderColor:'#d97706',backgroundColor:'transparent',borderWidth:2,tension:.3,pointRadius:3},
+    ]
+  },
+  plugins:[ChartDataLabels],
+  options:{
+    maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:12,boxWidth:20}},
+      datalabels:{display:function(ctx){return ctx.dataIndex===ctx.dataset.data.length-1},anchor:'end',align:'right',formatter:v=>'$'+v+'B',font:{size:10,weight:'600'},color:'#334155'},
+      tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': $'+ctx.parsed.y+'B'}}
+    },
+    scales:{y:{ticks:{callback:v=>'$'+v+'B'},grid:{color:'#e2e8f0'}},x:{grid:{display:false}}}
+  }
+});
+
+// ═══ GMV TREND EU ═══
+new Chart(document.getElementById('gmvTrend'), {
+  type:'line',
+  data:{
+    labels:['2024','2025','2026F','2027F','2028F'],
+    datasets:[
+      {label:'Amazon EU',data:[55,60,68,74,80],borderColor:'#2563eb',backgroundColor:'transparent',borderWidth:3,tension:.3,pointRadius:4},
+      {label:'Bol.com',data:[5.9,6.3,6.8,7.3,7.8],borderColor:'#0891b2',backgroundColor:'transparent',borderWidth:2.5,tension:.3,pointRadius:4},
+      {label:'eMAG',data:[2,2.4,2.8,3.3,3.9],borderColor:'#7c3aed',backgroundColor:'transparent',borderWidth:2.5,tension:.3,pointRadius:4},
+      {label:'Otto.de',data:[3,3.1,3.3,3.4,3.6],borderColor:'#d97706',backgroundColor:'transparent',borderWidth:2,tension:.3,pointRadius:3},
+      {label:'Kaufland',data:[1.5,3,5.5,8,11],borderColor:'#16a34a',backgroundColor:'transparent',borderWidth:2.5,tension:.3,pointRadius:4,borderDash:[5,3]},
+    ]
+  },
+  plugins:[ChartDataLabels],
+  options:{
+    maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:12,boxWidth:20}},
+      datalabels:{display:function(ctx){return ctx.dataIndex===ctx.dataset.data.length-1},anchor:'end',align:'right',formatter:v=>'\u20ac'+v+'B',font:{size:10,weight:'600'},color:'#334155'},
+      tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': \u20ac'+ctx.parsed.y+'B'}}
+    },
+    scales:{y:{ticks:{callback:v=>'\u20ac'+v+'B'},grid:{color:'#e2e8f0'}},x:{grid:{display:false}}}
+  }
+});
+
+// ═══ PEST CONTROL FIT EU ═══
+new Chart(document.getElementById('fitChart'), {
+  type:'radar',
+  data:{
+    labels:['Pest Control','Fleas/Ticks','Lice/Wszy','Ruch (traffic)','Łatwość wejścia','Wzrost'],
+    datasets:[
+      {label:'Kaufland',data:[7,5,4,5,9,10],borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.1)',pointRadius:3},
+      {label:'eMAG',data:[7,6,6,8,7,8],borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,.1)',pointRadius:3},
+      {label:'Bol.com',data:[5,6,5,6,6,5],borderColor:'#0891b2',backgroundColor:'rgba(8,145,178,.1)',pointRadius:3},
+    ]
+  },
+  options:{
+    maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:12,boxWidth:20}},datalabels:{display:false}},
+    scales:{r:{min:0,max:10,ticks:{stepSize:2,display:false},pointLabels:{font:{size:10}}}}
+  }
+});
+
+// ═══ BUBBLE CHART — MATRYCA ═══
+new Chart(document.getElementById('bubbleChart'), {
+  type:'bubble',
+  data:{
+    datasets:[
+      {label:'Walmart',data:[{x:8,y:9,r:18}],backgroundColor:'rgba(22,163,74,.7)'},
+      {label:'TikTok Shop',data:[{x:6,y:9,r:15}],backgroundColor:'rgba(0,0,0,.6)'},
+      {label:'Kaufland',data:[{x:9,y:8,r:12}],backgroundColor:'rgba(22,163,74,.5)'},
+      {label:'eMAG',data:[{x:7,y:7,r:13}],backgroundColor:'rgba(124,58,237,.6)'},
+      {label:'Zooplus',data:[{x:6,y:7,r:10}],backgroundColor:'rgba(21,128,61,.5)'},
+      {label:'eBay',data:[{x:8,y:5,r:11}],backgroundColor:'rgba(217,119,6,.5)'},
+      {label:'Otto',data:[{x:6,y:5,r:8}],backgroundColor:'rgba(217,119,6,.3)'},
+      {label:'Bol.com',data:[{x:6,y:5,r:9}],backgroundColor:'rgba(8,145,178,.4)'},
+    ]
+  },
+  options:{
+    maintainAspectRatio:false,
+    plugins:{
+      legend:{position:'bottom',labels:{font:{size:10},padding:8,boxWidth:12}},
+      datalabels:{display:false},
+      tooltip:{callbacks:{label:ctx=>ctx.dataset.label+' — łatwość: '+ctx.parsed.x+'/10, potencjał: '+ctx.parsed.y+'/10'}}
+    },
+    scales:{
+      x:{title:{display:true,text:'Łatwość wejścia →',font:{size:11}},min:4,max:10,grid:{color:'#e2e8f0'}},
+      y:{title:{display:true,text:'Potencjał →',font:{size:11}},min:3,max:10,grid:{color:'#e2e8f0'}}
+    }
+  }
+});
+</script>
+
+</body>
+</html>
