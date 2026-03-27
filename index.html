@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -74,18 +75,6 @@ li{margin-bottom:4px}
     <h3>EU — GMV marketplace'ów</h3>
     <div class="cw" style="height:280px"><canvas id="gmvEU"></canvas></div>
     <div class="note">Źródła: <a href="https://marketplace-universe.com/marketplaces-in-cee/">Marketplace Universe</a>, <a href="https://www.plentyone.com/en/blog/off-to-southeastern-europe-opening-up-new-markets-with-plentyone-and-emag">PlentyOne</a>, <a href="https://olimpmarketplace.com/en/index.php/2025/03/19/przeglad-najlepszych-platform-marketplace-w-europie-i-usa-e-commerce-w-2025/">Olimp Marketplace</a></div>
-  </div>
-</div>
-
-<!-- ═══ CHART: GMV PIE SHARE ═══ -->
-<div class="g2">
-  <div class="card">
-    <h3>Udział w GMV — US (2025)</h3>
-    <div class="cw" style="height:280px"><canvas id="pieUS"></canvas></div>
-  </div>
-  <div class="card">
-    <h3>Udział w GMV — EU (2025)</h3>
-    <div class="cw" style="height:280px"><canvas id="pieEU"></canvas></div>
   </div>
 </div>
 
@@ -261,6 +250,15 @@ li{margin-bottom:4px}
   </div>
 </div>
 
+<!-- ═══ PEST CONTROL % vs AMAZON ═══ -->
+<h2>Oczekiwany obrót pest control vs Amazon (% sprzedaży Amazona)</h2>
+<div class="card">
+  <div class="cw" style="height:300px"><canvas id="pctChart"></canvas></div>
+  <div class="insight" style="border-left-color:#d97706;background:#fffbeb">
+    <strong>Uwaga metodologiczna:</strong> Wartości "Maksimum %" pochodzą z raportów branżowych (<a href="https://incrementumdigital.com/blog/ecommerce-news/walmart-marketplace-versus-amazon-where-to-sell-guide/">Incrementum Digital</a>, <a href="https://www.channable.com/blog/walmart-marketplace-vs-amazon">Channable</a>). W praktyce wielu sprzedawców (szczególnie w niszach jak suplementy i pest control) osiąga <strong>dolny zakres (5-10%)</strong> sprzedaży online vs Amazon. Dane z <a href="https://www.reddit.com/r/WalmartSellers/">r/WalmartSellers</a> i <a href="https://sellercentral.amazon.com/seller-forums/">Amazon Seller Forums</a> potwierdzają niższe wartości. Retail/brick-and-mortar Walmart ma większy potencjał — wymaga osobnej analizy.
+  </div>
+</div>
+
 <!-- ═══ MATRYCA ═══ -->
 <h2>Matryca priorytetów</h2>
 <div class="card">
@@ -423,36 +421,6 @@ new Chart(document.getElementById('gmvEU'), {
   }
 });
 
-// ═══ PIE US ═══
-new Chart(document.getElementById('pieUS'), {
-  type:'doughnut',
-  data:{
-    labels:['Amazon US ($400B)','Walmart ($85B)','TikTok Shop ($22B)','eBay US ($18B)'],
-    datasets:[{data:[400,85,22,18],backgroundColor:['#2563eb','#16a34a','#000','#d97706'],borderWidth:2,borderColor:'#fff'}]
-  },
-  plugins:[ChartDataLabels],
-  options:{
-    maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:8,boxWidth:14}},
-      datalabels:{formatter:(v,ctx)=>{const t=ctx.dataset.data.reduce((a,b)=>a+b,0);return(v/t*100).toFixed(1)+'%'},color:'#fff',font:{size:11,weight:'700'}}}
-  }
-});
-
-// ═══ PIE EU ═══
-new Chart(document.getElementById('pieEU'), {
-  type:'doughnut',
-  data:{
-    labels:['Amazon EU (\u20ac60B)','Bol.com (\u20ac6.3B)','Otto.de (\u20ac3B)','Kaufland (\u20ac2.5B)','eMAG (\u20ac2.5B)'],
-    datasets:[{data:[60,6.3,3,2.5,2.5],backgroundColor:['#2563eb','#0891b2','#d97706','#16a34a','#7c3aed'],borderWidth:2,borderColor:'#fff'}]
-  },
-  plugins:[ChartDataLabels],
-  options:{
-    maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:8,boxWidth:14}},
-      datalabels:{formatter:(v,ctx)=>{const t=ctx.dataset.data.reduce((a,b)=>a+b,0);return(v/t*100).toFixed(1)+'%'},color:'#fff',font:{size:11,weight:'700'}}}
-  }
-});
-
 // ═══ WZROST YoY ═══
 new Chart(document.getElementById('growthChart'), {
   type:'bar',
@@ -534,6 +502,27 @@ new Chart(document.getElementById('fitChart'), {
     maintainAspectRatio:false,
     plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:12,boxWidth:20}},datalabels:{display:false}},
     scales:{r:{min:0,max:10,ticks:{stepSize:2,display:false},pointLabels:{font:{size:10}}}}
+  }
+});
+
+// ═══ % vs AMAZON ═══
+new Chart(document.getElementById('pctChart'), {
+  type:'bar',
+  data:{
+    labels:['Walmart','TikTok Shop','Kaufland','eMAG','eBay','Bol.com','Otto'],
+    datasets:[
+      {label:'Minimum %',data:[20,10,5,5,5,3,3],backgroundColor:'rgba(37,99,235,.3)',borderRadius:4},
+      {label:'Maksimum %',data:[35,40,15,15,15,10,10],backgroundColor:'rgba(37,99,235,.8)',borderRadius:4}
+    ]
+  },
+  plugins:[ChartDataLabels],
+  options:{
+    maintainAspectRatio:false,
+    plugins:{
+      legend:{position:'bottom',labels:{font:{size:11},padding:12}},
+      datalabels:{anchor:'end',align:'end',formatter:v=>v+'%',font:{size:10,weight:'600'},color:'#334155'}
+    },
+    scales:{y:{max:50,ticks:{callback:v=>v+'%'},grid:{color:'#e2e8f0'}},x:{grid:{display:false}}}
   }
 });
 
